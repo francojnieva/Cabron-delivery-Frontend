@@ -21,7 +21,7 @@ const CardFood = () => {
                         <p className="font-bold"> <span className="text-[#F8B602]">$</span>2000</p>
                     </div>
                     <div>
-                        <button className="p-2 rounded-lg bg-[#F8B602]"><IoMdAdd className=" text-[#fff]" /></button>
+                        <button className="p-2 rounded-lg bg-[#F8B602]"><IoMdAdd className="text-[#fff]" /></button>
                     </div>
                 </div>
             </div>

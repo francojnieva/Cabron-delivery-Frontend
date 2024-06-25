@@ -1,13 +1,14 @@
 import { MdEdit } from "react-icons/md";
+import ModalLogout from "../../components/ModalLogout/ModalLogout";
 
 
 const Profile = () => {
     return (
-        <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full">
-            <section>
+        <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">
+            <div className=" flex items-center justify-between">
                 <h1 className=" text-2xl font-medium">Perfil</h1>
-                <p className=" text-[#434444] text-sm">Fecha actual</p>
-            </section>
+                <ModalLogout />
+            </div>
             <hr className=" my-3" />
             <section className="grid grid-cols-1 gap-3">
                 <article className="bg-[#FFF] flex items-center space-x-4 p-4 rounded-lg shadow-md">
