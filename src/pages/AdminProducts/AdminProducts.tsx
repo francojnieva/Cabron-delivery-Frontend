@@ -10,6 +10,7 @@ export type Product = {
     description: string;
     price: number;
     discount: number;
+    quantity?: number;
 }
 
 const AdminProducts = () => {

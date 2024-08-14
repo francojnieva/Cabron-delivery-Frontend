@@ -9,10 +9,12 @@ import SignUp from "./pages/SignUp/SignUp"
 import { BrowserRouter,Route, Routes } from "react-router-dom"
 import AdminProducts from "./pages/AdminProducts/AdminProducts"
 import Cart from "./pages/Cart/Cart"
+import { CartContextProvider } from "./context/CartContext"
 
 function App() {
 
 	return (
+		<CartContextProvider>
 		<BrowserRouter>
 			<Routes>
 				<Route path="/" element={<SignUp />}></Route>
@@ -28,6 +30,7 @@ function App() {
 				<Route path="*" element={<NotFound />} />
 			</Routes>
 		</BrowserRouter>
+		</CartContextProvider>
 		
 	)
 }

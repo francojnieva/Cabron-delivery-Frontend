@@ -2,7 +2,7 @@ import Sidebard from '../../components/Sidebard/Sidebard'
 import MenuMobile from '../../components/MenuMobile/MenuMobile'
 import { ReactNode } from 'react'
 
-type Props = {
+export type Props = {
     children: ReactNode
 }
 
