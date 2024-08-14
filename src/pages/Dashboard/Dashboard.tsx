@@ -1,15 +1,53 @@
+import { useEffect, useState } from "react";
 import CardFood from "../../components/CardFood/CardFood";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { Product } from "../AdminProducts/AdminProducts";
 
 const Dashboard = () => {
 
+    const URL = import.meta.env.VITE_URL_BACKEND
+    const token = localStorage.getItem('token')
+    const { name }  = jwtDecode(token)
+
+    const [loading, setLoading] = useState<boolean>(true)
+    const [products, setProducts] = useState<Product[]>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const { data } = await axios.get(`${URL}/api/productos`)
+                setProducts(data)
+                setLoading(false)
+            } catch (error) {
+                console.log(error)
+                setLoading(false)
+            }
+        } 
+        fetchData()
+    },[])
+    
     return (
         <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">
             <PageTitle 
-                title='Bienvenido, franconieva'
+                title={`Bienvenido/a, ${name}`}
             />
-            <section className=" py-6 flex items-center justify-around flex-wrap gap-4 md:justify-start lg:gap-5">
-                <CardFood />
+            <section className=" py-6 flex items-center justify-around flex-wrap gap-2 md:justify-start lg:gap-5">
+                { loading &&  <p className="loading  mx-auto loading-spinner loading-md"></p> }
+                {products.map(product => {
+                    return (
+                        <CardFood
+                            key={product._id}
+                            idProduct={product._id}
+                            image={product.image}
+                            name={product.name}
+                            description={product.description}
+                            price={product.price}
+                            discount={product.discount}
+                        />
+                    )
+                })}
             </section>
         </section>
     )

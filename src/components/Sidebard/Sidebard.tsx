@@ -4,8 +4,7 @@ import { HiUser } from "react-icons/hi";
 import { IoIosNotifications } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Logo from '../../assets/logo-cabron.svg'
-
-
+import { IoSettingsSharp } from "react-icons/io5";
 
 const Sidebard = () => {
     return (
@@ -28,6 +27,10 @@ const Sidebard = () => {
                     <Link to={'/notificaciones'} className=' flex items-center text-xl space-x-3 mx-2  py-4 px-7 rounded-lg hover:bg-[#F8B602] hover:text-[#FFF] transition-all'>
                         <IoIosNotifications />
                         <p className=' text-sm font-medium'>Notificaciones</p>
+                    </Link>
+                    <Link to={'/admin-productos'} className=' flex items-center text-xl space-x-3 mx-2  py-4 px-7 rounded-lg hover:bg-[#F8B602] hover:text-[#FFF] transition-all'>
+                        <IoSettingsSharp />
+                        <p className=' text-sm font-medium'>Administrar productos</p>
                     </Link>
                 </ul>  
             </nav>

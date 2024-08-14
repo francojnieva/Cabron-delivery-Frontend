@@ -1,22 +1,17 @@
-import Cart from "../Cart/Cart"
-import InputSearch from "../InputSearch/InputSearch"
+import { FaCartShopping } from "react-icons/fa6"
+import { Link } from "react-router-dom"
 
-type PageTitle = {
+type Props = {
     title: string
 }
 
-const PageTitle = ({ title }: PageTitle) => {
+const PageTitle = ({ title }: Props) => {
     return (
-        <section className="flex flex-col space-y-3 md:space-y-0 md:flex-row md:justify-between">
+        <section className="flex items-center justify-between">
             <h1 className=" text-2xl font-medium">{title}</h1>
-            <div className="flex items-center justify-between space-x-3">
-                <div>
-                    <InputSearch />
-                </div>
-                <div>
-                    <Cart />
-                </div>
-            </div>
+            <Link to={'/carrito'}>
+                <FaCartShopping className="text-[#F8B602] text-xl cursor-pointer lg:text-2xl"/>
+            </Link>
         </section>
     )
 }

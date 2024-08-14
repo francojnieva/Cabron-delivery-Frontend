@@ -1,11 +1,11 @@
 
-type CardNotification = {
+type Card = {
     numberOrder: number,
     menu: string,
     total: number,
 }
 
-const CardNotification = ({ numberOrder, menu, total }: CardNotification ) => {
+const CardNotification = ({ numberOrder, menu, total }: Card ) => {
     return (
         <article className="grid items-center grid-cols-3 p-3 rounded-md transition-all hover:bg-[#ffd256]">
             <h4># {numberOrder}</h4>
