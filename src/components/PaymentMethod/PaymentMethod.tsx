@@ -4,10 +4,10 @@ import { IoIosCheckmarkCircle } from "react-icons/io";
 
 const PaymentMethod = () => {
 
-const handleDrawer = () => {
-    const drawer = document.getElementById('my-drawer-2') as HTMLInputElement
-    if (drawer) drawer.checked = false
-}
+    const handleDrawer = () => {
+        const drawer = document.getElementById('my-drawer-2') as HTMLInputElement
+        if (drawer) drawer.checked = false
+    }
 
     return (
         <div className="drawer drawer-end ">

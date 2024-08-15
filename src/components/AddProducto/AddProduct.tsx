@@ -1,6 +1,6 @@
-import axios from 'axios'
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
+import { clientAxios } from '../../utils/axios'
 
 type Form = {
     name: string,
@@ -11,8 +11,6 @@ type Form = {
 }
 
 const AddProduct = () => {
-
-    const URL = import.meta.env.VITE_URL_BACKEND
 
     const { handleSubmit, register, formState: { errors } } = useForm<Form>()
 
@@ -30,7 +28,7 @@ const AddProduct = () => {
             formData.append('discount', data.discount)
             formData.append('imagen', data.imagen[0])
 
-            const result = await axios.post(`${URL}/api/producto`, formData, 
+            const result = await clientAxios.post('/api/producto', formData, 
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             )
 

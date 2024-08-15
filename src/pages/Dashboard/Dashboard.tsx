@@ -1,15 +1,13 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import CardFood from "../../components/CardFood/CardFood";
 import PageTitle from "../../components/PageTitle/PageTitle";
-import axios from "axios";
-import { jwtDecode } from "jwt-decode";
 import { Product } from "../AdminProducts/AdminProducts";
+import { UserContext } from "../../context/UserContext";
+import { clientAxios } from "../../utils/axios";
 
 const Dashboard = () => {
-
-    const URL = import.meta.env.VITE_URL_BACKEND
-    const token = localStorage.getItem('token')
-    const { name }  = jwtDecode(token)
+    
+    const { userData } = useContext(UserContext)
 
     const [loading, setLoading] = useState<boolean>(true)
     const [products, setProducts] = useState<Product[]>([])
@@ -17,7 +15,7 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axios.get(`${URL}/api/productos`)
+                const { data } = await clientAxios.get(`/api/productos`)
                 setProducts(data)
                 setLoading(false)
             } catch (error) {
@@ -31,7 +29,7 @@ const Dashboard = () => {
     return (
         <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">
             <PageTitle 
-                title={`Bienvenido/a, ${name}`}
+                title={`Bienvenido/a, ${userData.username}`}
             />
             <section className=" py-6 flex items-center justify-around flex-wrap gap-2 md:justify-start lg:gap-5">
                 { loading &&  <p className="loading  mx-auto loading-spinner loading-md"></p> }

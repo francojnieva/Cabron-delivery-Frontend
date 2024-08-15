@@ -55,17 +55,17 @@ const CardFood = ({ image, name, description, price, discount, idProduct } : Car
                     <div className=" space-y-1">
                         <p className="font-bold text-sm lg:text-base">{name}</p>
                         <p className="text-xs text-[#a3a3a3]">{description}</p>
-                        <div className=" flex items-center justify-between pt-2">
-                            <p className="font-bold"> <span className="text-[#F8B602]">$</span>{price}</p>
-                            <div className=" flex items-center space-x-2 w-20">
-                                <button onClick={subtract} disabled={counter <= 1} className="px-2 rounded-md border border-[#F8B602]">-</button>
-                                <p className=" text-center font-medium">{counter}</p>
-                                <button onClick={add} className="px-2 rounded-md border border-[#F8B602]">+</button>
+                        <div className=" flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between pt-2 lg:space-y-0">
+                            <p className="font-bold"> <span className="text-[#F8B602]">$ </span>{price}</p>
+                            <div className=" flex items-center font-medium text-[#fff] space-x-2 w-20">
+                                <button onClick={subtract} disabled={counter <= 1} className="px-2 rounded-md  bg-[#666666]">-</button>
+                                <p className=" text-center text-black">{counter}</p>
+                                <button onClick={add} className="px-2 rounded-md bg-[#666666]">+</button>
                             </div>
                         </div>
                     </div>
-                    {successMessage && <AiFillLike className=" absolute bottom-12 right-3 text-xl text-green-500" />}
-                    {errorMessage && <AiFillDislike className=" absolute bottom-12 right-3 text-xl text-red-500" />}
+                    {successMessage && <AiFillLike className=" absolute bottom-12 left-3 text-xl text-green-500" />}
+                    {errorMessage && <AiFillDislike className=" absolute bottom-12 left-3 text-xl text-red-500" />}
                     <div className="w-full mt-3">
                         <button onClick={handleCart} className="p-2 rounded-lg bg-[#F8B602] text-xs font-medium text-[#fff] w-full lg:text-sm">{loading ? <p className="loading loading-spinner loading-xs lg:loading-sm"></p> : 'Agregar al carrito'}</button>
                     </div>

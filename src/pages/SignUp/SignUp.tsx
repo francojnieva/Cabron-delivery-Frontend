@@ -4,6 +4,7 @@ import { useForm } from 'react-hook-form';
 import axios, { AxiosError } from 'axios';
 import { useState } from 'react';
 import { MdError } from "react-icons/md";
+import { clientAxios } from '../../utils/axios';
 
 export type Form = {
     username?: string
@@ -12,8 +13,7 @@ export type Form = {
 }
 
 const SignUp = () => {
-    const URL = import.meta.env.VITE_URL_BACKEND
-
+    
     const { handleSubmit, register, formState: { errors } } = useForm<Form>()
 
     const navigate = useNavigate()
@@ -25,7 +25,7 @@ const SignUp = () => {
     const onSubmit = async (data: Form) => {
         try {
             setLoading(true)
-            const response = await axios.post(`${URL}/api/registro`, data)
+            const response = await clientAxios.post(`/api/registro`, data)
             if (response.status === 201) {
                 setSuccessMessage(response.data.message)
                 setTimeout(() => {

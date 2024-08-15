@@ -1,12 +1,10 @@
 import { useEffect, useState } from "react"
 import CardFood from "../../components/CardFood/CardFood"
 import PageTitle from "../../components/PageTitle/PageTitle"
-import axios from "axios"
 import { Product } from "../AdminProducts/AdminProducts"
+import { clientAxios } from "../../utils/axios"
 
 const Discount = () => {
-
-    const URL = import.meta.env.VITE_URL_BACKEND
 
     const [products, setProducts] = useState<Product[]>([])
     const [loading, setLoading] = useState<boolean>(true)
@@ -15,7 +13,7 @@ const Discount = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axios.get(`${URL}/api/productos-descuentos`)
+                const { data } = await clientAxios.get(`/api/productos-descuentos`)
                 if (data.length === 0) return setMessage('No hay productos con descuentos')
                 setProducts(data)
             } catch (error) {

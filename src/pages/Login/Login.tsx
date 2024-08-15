@@ -5,9 +5,10 @@ import axios, { AxiosError } from 'axios'
 import { useState } from 'react'
 import { MdError } from 'react-icons/md'
 import { Form } from '../SignUp/SignUp'
+import { clientAxios } from '../../utils/axios'
 
 const Login = () => {
-    const URL = import.meta.env.VITE_URL_BACKEND
+   
     const { handleSubmit, register, formState: { errors } } = useForm<Form>()
 
     const navigate = useNavigate()
@@ -19,7 +20,7 @@ const Login = () => {
     const onSubmit = async (data: Form) => {
         try {
             setLoading(true)
-            const response = await axios.post(`${URL}/api/iniciar-sesion`, data)
+            const response = await clientAxios.post(`/api/iniciar-sesion`, data)
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token)
                 setSuccessMessage(response.data.message)

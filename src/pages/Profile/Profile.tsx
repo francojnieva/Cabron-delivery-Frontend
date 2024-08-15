@@ -1,8 +1,13 @@
-import { MdEdit } from "react-icons/md";
 import ModalLogout from "../../components/ModalLogout/ModalLogout";
 import PageTitle from "../../components/PageTitle/PageTitle";
+import ModalEditUser from "../../components/ModalEditUser/ModalEditUser";
+import { useContext } from "react";
+import { UserContext } from "../../context/UserContext";
 
 const Profile = () => {
+
+    const { userData } = useContext(UserContext)
+    
     return (
         <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">
             <PageTitle 
@@ -11,15 +16,13 @@ const Profile = () => {
             <ModalLogout />
             <hr className=" my-3" />
             <section className="grid grid-cols-1 gap-3">
-                <article className="bg-[#FFF] flex items-center space-x-4 p-4 rounded-lg shadow-md">
-                    <img src="" className="rounded-full w-14 h-14 bg-black lg:w-20 lg:h-20" alt="Foto de perfil" />
-                    <div className=" flex items-center font-medium space-x-2">
-                        <p>francojnieva</p>
-                        <button>
-                            <MdEdit className="text-[#434444]" />
-                        </button>
+                <article className="bg-[#FFF] flex p-4 items-center space-x-3 rounded-lg shadow-md">
+                    <div className=" flex flex-col space-y-2">
+                        <p>Nombre: {userData.username} </p>
+                        <p>Email: {userData.email}</p>
                     </div>
                 </article>
+                <ModalEditUser />
             </section>
         </section>
     )

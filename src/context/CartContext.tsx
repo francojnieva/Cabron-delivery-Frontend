@@ -1,8 +1,8 @@
-import axios from "axios"
-import { createContext, useEffect, useState } from "react"
+import { createContext, useContext, useEffect, useState } from "react"
 import { Product } from "../pages/AdminProducts/AdminProducts"
 import { Props } from "../layout/Board/Board"
-import { jwtDecode } from "jwt-decode"
+import { clientAxios } from "../utils/axios"
+import { UserContext } from "./UserContext"
 
 export const CartContext = createContext()
 
@@ -12,16 +12,15 @@ type PropAddProduct = {
 }
 
 export const CartContextProvider = ({ children } : Props) => {
-    const URL = import.meta.env.VITE_URL_BACKEND
-    const token = localStorage.getItem('token')
-    const { id } = jwtDecode(token)
-    const userId = id
+    
+    const { id } = useContext(UserContext)
+    const userId: string = id
 
     const [cartProducts, setCartProducts] = useState<Product[]>([])
     
     const fetchData = async () => {
         try {
-            const { data } = await axios.get(`${URL}/api/carrito?userId=${id}`)
+            const { data } = await clientAxios.get(`/api/carrito?userId=${id}`)
             setCartProducts(data)
         } catch (error) {
             console.log(error)
@@ -30,7 +29,7 @@ export const CartContextProvider = ({ children } : Props) => {
 
     const addProduct = async ({ idProduct, counter } : PropAddProduct) => {
         try {
-            await axios.post(`${URL}/api/carrito?id=${idProduct}`, { counter, userId })
+            await clientAxios.post(`/api/carrito?id=${idProduct}`, { counter, userId })
             fetchData()
         } catch (error) {
             console.log(error)
@@ -39,7 +38,7 @@ export const CartContextProvider = ({ children } : Props) => {
 
     const deleteProduct = async (id: string) => {
         try {
-            await axios.delete(`${URL}/api/carrito?id=${id}&userId=${userId}`)
+            await clientAxios.delete(`/api/carrito?id=${id}&userId=${userId}`)
             fetchData()
         } catch (error) {
             console.log(error)
@@ -47,7 +46,7 @@ export const CartContextProvider = ({ children } : Props) => {
     }
     
     const quantityInCart = cartProducts.length
-    const totalToPay = cartProducts.reduce((acc, product) => (acc + (product.price * product.quantity)), 0)
+    const totalToPay = cartProducts.reduce((acc, product) => (acc + (product.price * (product.quantity as number))), 0)
 
     useEffect(()=> {
         fetchData()

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import AddProduct from "../../components/AddProducto/AddProduct"
-import axios from "axios"
 import CardFood from "../../components/CardFood/CardFood"
+import { clientAxios } from "../../utils/axios"
 
 export type Product = {
     _id: string;
@@ -20,7 +20,7 @@ const AdminProducts = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const { data } = await axios.get('https://cabron-delivery-backend.vercel.app/api/productos')
+                const { data } = await clientAxios.get('/api/productos')
                 setProducts(data)
             } catch (error) {
                 console.log(error)

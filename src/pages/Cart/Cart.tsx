@@ -4,11 +4,24 @@ import { CartContext } from "../../context/CartContext"
 import { Product } from "../AdminProducts/AdminProducts"
 
 const Cart = () => {
-    const [loading, setLoading] = useState<boolean>(true)
+    const [loadingDelete, setLoadingDelete] = useState<string | null>(null)
+    const [loading, setLoading] = useState<boolean | string>(true)
     const { cartProducts, totalToPay, deleteProduct } = useContext(CartContext)
+
+    const handleDeleteProduct = async (id: string) => {
+        setLoadingDelete(id)
+        try {
+            await deleteProduct(id)
+        } catch (error) {
+            console.log(error)
+        } finally {
+            setLoadingDelete(null)
+        }
+    }
 
     useEffect(() => {
         if (cartProducts.length > 0) setLoading(false)
+        if (cartProducts.length === 0) setLoading(false)
     }, [cartProducts])
 
     return (
@@ -37,7 +50,15 @@ const Cart = () => {
                                  <p className=" font-medium text-xs">Cantidad: {quantity}</p>
                              </div>
                          </div>
-                         <button onClick={() => deleteProduct(_id)} className="text-red-500 text-lg"><BiSolidTrashAlt /></button>
+                         <button
+                            onClick={() => handleDeleteProduct(_id)}
+                            className="text-red-500 text-lg"
+                        >
+                            {loadingDelete === _id
+                                ? <span className="loading loading-spinner loading-xs"></span>
+                                : <BiSolidTrashAlt />
+                            }
+                        </button>
                      </article>
                 ))}
                 </>
