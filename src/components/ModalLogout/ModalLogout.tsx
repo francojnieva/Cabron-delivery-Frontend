@@ -13,6 +13,8 @@ const ModalLogout = () => {
         if (modal) return modal.close()
     }
 
+    const handleLogout = () => localStorage.removeItem('token')
+
     return (
         <>
             <button className="flex items-center my-3 space-x-2 py-1 px-2 font-medium text-xs rounded-lg text-white bg-[#f80202] lg:text-sm" onClick = {showModal}>
@@ -24,7 +26,7 @@ const ModalLogout = () => {
                     <p className="">¿Seguro que quieres cerrar sesión?</p>
                     <div className=" flex items-center justify-end text-xs space-x-7">
                         <button onClick = {closeModal}>Cancelar</button>
-                        <Link className="p-2 rounded-md bg-[#f80202e8]" to={'/iniciar-sesión'}>Cerrar sesión</Link>
+                        <Link onClick={handleLogout} className="p-2 rounded-md bg-[#f80202e8]" to={'/iniciar-sesión'}>Cerrar sesión</Link>
                     </div>
                 </div>
                 <form method="dialog" className="modal-backdrop">

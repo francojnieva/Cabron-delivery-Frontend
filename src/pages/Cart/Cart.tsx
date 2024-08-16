@@ -5,16 +5,15 @@ import { Product } from "../AdminProducts/AdminProducts"
 
 const Cart = () => {
     const [loadingDelete, setLoadingDelete] = useState<string | null>(null)
-    const [loading, setLoading] = useState<boolean | string>(true)
+    const [loading, setLoading] = useState<boolean>(true)
     const { cartProducts, totalToPay, deleteProduct } = useContext(CartContext)
 
-    const handleDeleteProduct = async (id: string) => {
-        setLoadingDelete(id)
+    const handleDeleteProduct = async (id : string) => {
         try {
+            setLoadingDelete(id)
             await deleteProduct(id)
         } catch (error) {
             console.log(error)
-        } finally {
             setLoadingDelete(null)
         }
     }
@@ -22,14 +21,14 @@ const Cart = () => {
     useEffect(() => {
         if (cartProducts.length > 0) setLoading(false)
         if (cartProducts.length === 0) setLoading(false)
-    }, [cartProducts])
+    }, [])
 
     return (
         <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">
             <div className="flex items-center justify-between mb-3">
                 <h1 className="text-2xl font-medium">Carrito</h1>
                 <div className=" flex items-center space-x-3">
-                    <p className="hidden lg:block">Total: $ {totalToPay} </p>
+                    <p className="hidden font-medium lg:block">Total: $ {totalToPay} </p>
                     <button className=" bg-[#F8B602] rounded-md py-1 px-3 font-medium text-white text-sm lg:text-base">Comprar</button>
                 </div>
             </div>

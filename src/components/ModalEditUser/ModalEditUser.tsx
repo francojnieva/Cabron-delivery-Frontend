@@ -4,7 +4,7 @@ import { useContext } from 'react'
 import { UserContext } from '../../context/UserContext'
 
 const ModalEditUser = () => {
-    const { editUser, id } = useContext(UserContext)
+    const { editUser } = useContext(UserContext)
     const { handleSubmit, register, formState: { errors }, reset } = useForm<Form>()
 
     const showModal = () => {

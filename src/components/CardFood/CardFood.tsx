@@ -15,8 +15,8 @@ type Card = {
 
 const CardFood = ({ image, name, description, price, discount, idProduct } : Card) => {
 
-    const [successMessage, setSuccessMessage] = useState<string | null>(null)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
+    const [successMessage, setSuccessMessage] = useState<boolean>(false)
+    const [errorMessage, setErrorMessage] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
     const [counter, setCounter] = useState<number>(1)
     const { addProduct } = useContext(CartContext)
@@ -32,15 +32,16 @@ const CardFood = ({ image, name, description, price, discount, idProduct } : Car
                 counter
             })
             setLoading(false)
+            setSuccessMessage(true)
             setTimeout(() => {
-                setSuccessMessage(null)
+                setSuccessMessage(false)
             }, 2000)
         } catch (error) {
             console.log(error)
             setLoading(false)
-            setErrorMessage(error.response)
+            setErrorMessage(true)
             setTimeout(() => {
-                setErrorMessage(null)
+                setErrorMessage(false)
             }, 2000)
         }
     }
@@ -64,8 +65,8 @@ const CardFood = ({ image, name, description, price, discount, idProduct } : Car
                             </div>
                         </div>
                     </div>
-                    {successMessage && <AiFillLike className=" absolute bottom-12 left-3 text-xl text-green-500" />}
-                    {errorMessage && <AiFillDislike className=" absolute bottom-12 left-3 text-xl text-red-500" />}
+                    {successMessage && <AiFillLike className=" absolute bottom-12 right-3 text-xl text-green-500" />}
+                    {errorMessage && <AiFillDislike className=" absolute bottom-12 right-3 text-xl text-red-500" />}
                     <div className="w-full mt-3">
                         <button onClick={handleCart} className="p-2 rounded-lg bg-[#F8B602] text-xs font-medium text-[#fff] w-full lg:text-sm">{loading ? <p className="loading loading-spinner loading-xs lg:loading-sm"></p> : 'Agregar al carrito'}</button>
                     </div>
