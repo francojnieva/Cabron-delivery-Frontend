@@ -2,13 +2,14 @@ import { Link, useNavigate } from 'react-router-dom'
 import Banner from '../../assets/banner-delivery.png'
 import { useForm } from 'react-hook-form'
 import axios, { AxiosError } from 'axios'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { MdError } from 'react-icons/md'
 import { Form } from '../SignUp/SignUp'
 import { clientAxios } from '../../utils/axios'
+import { CartContext } from '../../context/CartContext'
 
 const Login = () => {
-   
+    const { setToken } = useContext(CartContext)
     const { handleSubmit, register, formState: { errors } } = useForm<Form>()
 
     const navigate = useNavigate()
@@ -24,6 +25,7 @@ const Login = () => {
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token)
                 setSuccessMessage(response.data.message)
+                setToken(response.data.token)
                 setTimeout(() => {
                     navigate('/panel')
                 }, 2000)
@@ -37,6 +39,9 @@ const Login = () => {
                 }
             }
            setLoading(false)
+           setTimeout(() => {
+                setErrorMessage(null)
+            }, 2000)
         }
     }
 

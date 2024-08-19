@@ -1,8 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react"
+import { createContext, useEffect, useState } from "react"
 import { Product } from "../pages/AdminProducts/AdminProducts"
 import { Props } from "../layout/Board/Board"
 import { clientAxios } from "../utils/axios"
-import { UserContext } from "./UserContext"
+import { jwtDecode } from "jwt-decode"
+import { UserData } from "../pages/Profile/Profile"
 
 export const CartContext = createContext()
 
@@ -12,36 +13,52 @@ type PropAddProduct = {
 }
 
 export const CartContextProvider = ({ children } : Props) => {
-    
-    const { id } = useContext(UserContext)
-    const userId: string = id
+    const [token, setToken] = useState<string | null>(localStorage.getItem('token'))
+    const [userId, setUserId] = useState<string | undefined>()
 
+    useEffect(() => {
+        if (token) {
+            try {
+                const { id } = jwtDecode<UserData>(token)
+                setUserId(id)
+            } catch (error) {
+                console.error("Error decoding token:", error)
+            }
+        }
+    }, [token])
+    
     const [cartProducts, setCartProducts] = useState<Product[]>([])
     
     const fetchData = async () => {
-        try {
-            const { data } = await clientAxios.get(`/api/carrito?userId=${id}`)
-            setCartProducts(data)
-        } catch (error) {
-            console.log(error)
+        if (userId) {
+            try {
+                const { data } = await clientAxios.get(`/api/carrito?userId=${userId}`)
+                setCartProducts(data)
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
     const addProduct = async ({ idProduct, counter } : PropAddProduct) => {
-        try {
-            await clientAxios.post(`/api/carrito?id=${idProduct}`, { counter, userId })
-            fetchData()
-        } catch (error) {
-            console.log(error)
+        if (userId) {
+            try {
+                await clientAxios.post(`/api/carrito?id=${idProduct}`, { counter, userId })
+                fetchData()
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
 
     const deleteProduct = async (id: string) => {
-        try {
-            await clientAxios.delete(`/api/carrito?id=${id}&userId=${userId}`)
-            fetchData()
-        } catch (error) {
-            console.log(error)
+        if (userId) {
+            try {
+                await clientAxios.delete(`/api/carrito?id=${id}&userId=${userId}`)
+                fetchData()
+            } catch (error) {
+                console.log(error)
+            }
         }
     }
     
@@ -50,7 +67,7 @@ export const CartContextProvider = ({ children } : Props) => {
 
     useEffect(()=> {
         fetchData()
-    }, [])
+    }, [userId])
 
     return (
         <CartContext.Provider value={{
@@ -58,7 +75,8 @@ export const CartContextProvider = ({ children } : Props) => {
             quantityInCart,
             totalToPay,
             addProduct,
-            deleteProduct
+            deleteProduct,
+            setToken
         }}>
             {children}
         </CartContext.Provider>

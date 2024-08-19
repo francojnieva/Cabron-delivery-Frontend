@@ -1,10 +1,21 @@
 import { useForm } from 'react-hook-form'
 import { Form } from '../../pages/SignUp/SignUp'
-import { useContext } from 'react'
-import { UserContext } from '../../context/UserContext'
+import { jwtDecode } from 'jwt-decode'
+import { UserData } from '../../pages/Profile/Profile'
+import { clientAxios } from '../../utils/axios'
+import { useState } from 'react'
 
 const ModalEditUser = () => {
-    const { editUser } = useContext(UserContext)
+    const token : string | null = localStorage.getItem('token')
+    let userId: string | undefined
+
+    if (token) {
+        const { id } = jwtDecode<UserData>(token)
+        userId = id
+        
+    }
+
+    const [loading, setLoading] = useState<boolean>(false)
     const { handleSubmit, register, formState: { errors }, reset } = useForm<Form>()
 
     const showModal = () => {
@@ -19,10 +30,20 @@ const ModalEditUser = () => {
     }
 
     const onSubmit = async (data : Form) => {
-        await editUser(data)
-        closeModal()
+        try {
+            const id = userId
+            setLoading(true)
+            await clientAxios.put(`/api/editar-usuario?id=${id}`, data, {
+                headers: {auth: token}
+            })
+            setLoading(false)
+            closeModal()
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+        }
     }
-
+    
     return (
         <>
         <button className="rounded-md p-1 text-white bg-[#3d3d3d] md:w-28" onClick={showModal}>
@@ -74,7 +95,9 @@ const ModalEditUser = () => {
                         <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.password && errors.password.message}</span>
                         <div className=" flex items-center justify-end text-xs space-x-7">
                             <p onClick={closeModal}>Cancelar</p>
-                            <button type="submit" className="p-2 rounded-md bg-[#f80202e8]">Confirmar</button>
+                            <button type="submit" className="p-2 w-20 rounded-md bg-[#f80202e8]">
+                                {loading ?<p className="loading  mx-auto loading-spinner loading-xs"></p> : 'Confirmar' }
+                            </button>
                         </div>
                     </form>
                 </div>

@@ -1,13 +1,10 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import CardFood from "../../components/CardFood/CardFood";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { Product } from "../AdminProducts/AdminProducts";
-import { UserContext } from "../../context/UserContext";
 import { clientAxios } from "../../utils/axios";
 
 const Dashboard = () => {
-    
-    const { userData } = useContext(UserContext)
 
     const [loading, setLoading] = useState<boolean>(true)
     const [products, setProducts] = useState<Product[]>([])
@@ -29,7 +26,7 @@ const Dashboard = () => {
     return (
         <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">
             <PageTitle 
-                title={`Bienvenido/a, ${userData.username}`}
+                title={`Bienvenido/a`}
             />
             <section className=" py-6 flex items-center justify-around flex-wrap gap-2 md:justify-start lg:gap-5">
                 { loading &&  <p className="loading  mx-auto loading-spinner loading-md"></p> }
