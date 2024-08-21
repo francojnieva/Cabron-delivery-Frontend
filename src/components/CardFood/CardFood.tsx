@@ -59,9 +59,9 @@ const CardFood = ({ image, name, description, price, discount, idProduct } : Car
                         <div className=" flex flex-col space-y-2 lg:flex-row lg:items-center lg:justify-between pt-2 lg:space-y-0">
                             <p className="font-bold"> <span className="text-[#F8B602]">$ </span>{price}</p>
                             <div className=" flex items-center font-medium text-[#fff] space-x-2 w-20">
-                                <button onClick={subtract} disabled={counter <= 1} className="px-2 rounded-md  bg-[#666666]">-</button>
+                                <button onClick={subtract} disabled={counter <= 1} className="px-2 rounded-md  bg-[#333333]">-</button>
                                 <p className=" text-center text-black">{counter}</p>
-                                <button onClick={add} className="px-2 rounded-md bg-[#666666]">+</button>
+                                <button onClick={add} className="px-2 rounded-md bg-[#333333]">+</button>
                             </div>
                         </div>
                     </div>

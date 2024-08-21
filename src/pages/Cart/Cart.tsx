@@ -2,12 +2,13 @@ import { useContext, useEffect, useState } from "react"
 import { BiSolidTrashAlt } from "react-icons/bi"
 import { CartContext } from "../../context/CartContext"
 import { Product } from "../AdminProducts/AdminProducts"
+import { Link } from "react-router-dom"
 
 const Cart = () => {
     const [loadingDelete, setLoadingDelete] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(true)
     const { cartProducts, totalToPay, deleteProduct } = useContext(CartContext)
-
+    
     const handleDeleteProduct = async (id : string) => {
         try {
             setLoadingDelete(id)
@@ -29,7 +30,7 @@ const Cart = () => {
                 <h1 className="text-2xl font-medium">Carrito</h1>
                 <div className=" flex items-center space-x-3">
                     <p className="hidden font-medium lg:block">Total: $ {totalToPay} </p>
-                    <button className=" bg-[#F8B602] rounded-md py-1 px-3 font-medium text-white text-sm lg:text-base">Comprar</button>
+                    <Link to='/pagar' className=" bg-[#F8B602] rounded-md py-1 px-3 font-medium text-white text-sm lg:text-base">Comprar</Link>
                 </div>
             </div>
             <div className=" flex flex-col gap-3">
@@ -63,7 +64,7 @@ const Cart = () => {
                 </>
             }
             </div>
-            <div className="w-full text-center -ml-6 rounded-t-3xl font-medium bg-[#cacaca] p-3 fixed bottom-0 pb-20 lg:hidden">
+            <div className="w-full text-center -ml-6 rounded-t-3xl font-medium text-white bg-[#3D3D3D] p-3 fixed bottom-0 pb-20 lg:hidden">
                 <p>Total: $ {totalToPay}</p>
             </div>
         </section>

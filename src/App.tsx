@@ -11,6 +11,7 @@ import AdminProducts from "./pages/AdminProducts/AdminProducts"
 import Cart from "./pages/Cart/Cart"
 import { CartContextProvider } from "./context/CartContext"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute "
+import Payment from "./pages/Payment/Payment"
 
 function App() {
 
@@ -26,8 +27,9 @@ function App() {
 						<Route path="/carrito" element={<ProtectedRoute><Board><Cart /></Board></ProtectedRoute>} />
 						<Route path="/ofertas" element={<ProtectedRoute><Board><Discount /></Board></ProtectedRoute>} />
 						<Route path="/perfil" element={<ProtectedRoute><Board><Profile /></Board></ProtectedRoute>} />
+						<Route path="/pagar" element={<ProtectedRoute><Board><Payment /></Board></ProtectedRoute>} />
 						{/* Admin */}
-						<Route path="/admin-productos" element={<ProtectedRoute><Board><AdminProducts /></Board></ProtectedRoute>} />
+						<Route path="/admin" element={<ProtectedRoute><Board><AdminProducts /></Board></ProtectedRoute>} />
 						{/*  */}
 						<Route path="*" element={<NotFound />} />
 					</Routes>
