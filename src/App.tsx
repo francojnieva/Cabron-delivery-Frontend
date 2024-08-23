@@ -7,11 +7,14 @@ import Notifications from "./pages/Notifications/Notifications"
 import Profile from "./pages/Profile/Profile"
 import SignUp from "./pages/SignUp/SignUp"
 import { BrowserRouter,Route, Routes } from "react-router-dom"
-import AdminProducts from "./pages/AdminProducts/AdminProducts"
 import Cart from "./pages/Cart/Cart"
 import { CartContextProvider } from "./context/CartContext"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute "
 import Payment from "./pages/Payment/Payment"
+import Admin from "./pages/Admin/Admin"
+import AllUsers from "./components/AllUsers/AllUsers"
+import AllProducts from "./components/AllProducts/AllProducts"
+import AddProduct from "./components/AddProducto/AddProduct"
 
 function App() {
 
@@ -29,7 +32,9 @@ function App() {
 						<Route path="/perfil" element={<ProtectedRoute><Board><Profile /></Board></ProtectedRoute>} />
 						<Route path="/pagar" element={<ProtectedRoute><Board><Payment /></Board></ProtectedRoute>} />
 						{/* Admin */}
-						<Route path="/admin" element={<ProtectedRoute><Board><AdminProducts /></Board></ProtectedRoute>} />
+						<Route path="/admin-usuarios" element={<ProtectedRoute requiredRole="admin"><Board><Admin title='Usuarios'><AllUsers /></Admin></Board></ProtectedRoute>} />
+						<Route path="/admin-productos" element={<ProtectedRoute requiredRole="admin"><Board><Admin title='Productos'><AllProducts /></Admin></Board></ProtectedRoute>} />
+						<Route path="/admin-agregar-productos" element={<ProtectedRoute requiredRole="admin"><Board><Admin title='Agregar producto'><AddProduct /></Admin></Board></ProtectedRoute>} />
 						{/*  */}
 						<Route path="*" element={<NotFound />} />
 					</Routes>

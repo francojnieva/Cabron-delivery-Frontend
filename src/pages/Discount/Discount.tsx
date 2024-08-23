@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import CardFood from "../../components/CardFood/CardFood"
 import PageTitle from "../../components/PageTitle/PageTitle"
-import { Product } from "../AdminProducts/AdminProducts"
+import { Product } from "../Cart/Cart"
 import { clientAxios } from "../../utils/axios"
 
 const Discount = () => {

@@ -1,8 +1,17 @@
 import { useContext, useEffect, useState } from "react"
 import { BiSolidTrashAlt } from "react-icons/bi"
 import { CartContext } from "../../context/CartContext"
-import { Product } from "../AdminProducts/AdminProducts"
 import { Link } from "react-router-dom"
+
+export type Product = {
+    _id: string;
+    image: string;
+    name: string;
+    description: string;
+    price: number;
+    discount: number;
+    quantity?: number;
+}
 
 const Cart = () => {
     const [loadingDelete, setLoadingDelete] = useState<string | null>(null)

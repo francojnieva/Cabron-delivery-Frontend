@@ -7,6 +7,7 @@ import { MdError } from 'react-icons/md'
 import { Form } from '../SignUp/SignUp'
 import { clientAxios } from '../../utils/axios'
 import { CartContext } from '../../context/CartContext'
+import { jwtDecode } from 'jwt-decode'
 
 const Login = () => {
     const { setToken } = useContext(CartContext)
@@ -27,7 +28,14 @@ const Login = () => {
                 setSuccessMessage(response.data.message)
                 setToken(response.data.token)
                 setTimeout(() => {
-                    navigate('/panel')
+                    const token = localStorage.getItem('token')
+                    const {rol} = jwtDecode(token)
+                    if (rol === 'admin') {
+                        navigate('/admin-usuarios')
+                        
+                    } else {
+                        navigate('/panel')
+                    }
                 }, 2000)
             }
         } catch (error) {

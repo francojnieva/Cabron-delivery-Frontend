@@ -11,6 +11,7 @@ export type UserData = {
     email: string;
     id?: string
     password?: string
+    rol?: string
 }
 
 const Profile = () => {
@@ -20,7 +21,6 @@ const Profile = () => {
     if (token) {
         const { id } = jwtDecode<UserData>(token)
         userId = id
-        
     }
 
     const [user, setUser] = useState<UserData | null>(null)

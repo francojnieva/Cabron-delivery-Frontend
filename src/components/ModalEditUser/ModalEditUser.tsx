@@ -12,7 +12,6 @@ const ModalEditUser = () => {
     if (token) {
         const { id } = jwtDecode<UserData>(token)
         userId = id
-        
     }
 
     const [loading, setLoading] = useState<boolean>(false)

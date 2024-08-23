@@ -1,9 +1,9 @@
 import { createContext, useEffect, useState } from "react"
-import { Product } from "../pages/AdminProducts/AdminProducts"
 import { Props } from "../layout/Board/Board"
 import { clientAxios } from "../utils/axios"
 import { jwtDecode } from "jwt-decode"
 import { UserData } from "../pages/Profile/Profile"
+import { Product } from "../pages/Cart/Cart"
 
 export const CartContext = createContext()
 

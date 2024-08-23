@@ -49,9 +49,7 @@ const AddProduct = () => {
     }
 
     return (
-        <section className=" px-6 pt-4 bg-[#F5F5F5] w-full lg:pl-56">
-            <h1 className=" text-2xl font-medium">Agregar producto</h1>
-            <hr className=" my-3" />
+        
             <section className="flex justify-center">
                 <form className=' space-y-5 md:w-[60%] lg:w-[50%]' onSubmit={handleSubmit(onSubmit)}>
                     <div className=' space-y-3'>
@@ -113,7 +111,7 @@ const AddProduct = () => {
                     <button className=' w-full py-2 px-4 shadow-md rounded-md font-medium text-[#fff] bg-[#353534]' type="submit">{loading ? <span className="loading loading-spinner loading-md"></span> : 'Agregar producto'}</button>
                 </form>
             </section>
-        </section>
+       
     )
 }
 
