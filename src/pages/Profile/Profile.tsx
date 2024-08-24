@@ -50,7 +50,7 @@ const Profile = () => {
             <ModalLogout />
             <hr className=" my-3" />
             <section className="grid grid-cols-1 gap-3">
-                <article className="bg-[#FFF] flex p-4 items-center space-x-3 rounded-lg shadow-md">
+                <article className="bg-[#FFF] md:w-96 flex p-4 items-center space-x-3 rounded-lg shadow-md">
                     <div className=" flex flex-col space-y-2">
                         <p>Nombre: {user?.username} </p>
                         <p>Email: {user?.email}</p>

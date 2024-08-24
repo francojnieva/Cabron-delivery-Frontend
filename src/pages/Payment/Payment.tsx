@@ -24,7 +24,7 @@ const Payment = () => {
     const { email, id, name } : UserData = jwtDecode(token as string)
     const username = name
 
-    const { cartProducts, totalToPay } = useContext(CartContext)
+    const { cartProducts, totalToPay, emptyCart } = useContext(CartContext)
 
     const {handleSubmit, register, formState: { errors }, reset} = useForm<Form>()
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
@@ -52,6 +52,7 @@ const Payment = () => {
                 setSuccessMessage(null)
             }, 2000)
             reset()
+            emptyCart()
         } catch (error) {
             console.log(error)
             if (error.response) setErrorMessage('Error al enviar los datos')

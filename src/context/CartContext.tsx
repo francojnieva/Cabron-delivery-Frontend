@@ -61,6 +61,8 @@ export const CartContextProvider = ({ children } : Props) => {
             }
         }
     }
+
+    const emptyCart = () => setCartProducts([])
     
     const quantityInCart = cartProducts.length
     const totalToPay = cartProducts.reduce((acc, product) => (acc + (product.price * (product.quantity as number))), 0)
@@ -76,7 +78,8 @@ export const CartContextProvider = ({ children } : Props) => {
             totalToPay,
             addProduct,
             deleteProduct,
-            setToken
+            setToken,
+            emptyCart
         }}>
             {children}
         </CartContext.Provider>

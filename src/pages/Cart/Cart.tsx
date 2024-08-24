@@ -29,8 +29,7 @@ const Cart = () => {
     }
 
     useEffect(() => {
-        if (cartProducts.length > 0) setLoading(false)
-        if (cartProducts.length === 0) setLoading(false)
+        if (cartProducts.length >= 0) setLoading(false)
     }, [])
 
     return (
