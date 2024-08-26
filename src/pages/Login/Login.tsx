@@ -91,7 +91,7 @@ const Login = () => {
                     <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.password && errors.password.message}</span>
                 </div>
                 <div>
-                    <Link to='/' className=" text-sm link text-blue-600">Registrarme</Link>
+                    <Link to='/registro' className=" text-sm link text-blue-600">Registrarme</Link>
                 </div>
                 {successmessage && <p className='py-2 px-4 flex text-sm items-center text-center rounded-md text-[#fff] bg-[#00a933f6]'>{successmessage}</p>}
                 {errorMessage && <p className='py-2 px-4 flex text-sm items-center text-center rounded-md text-[#fff] bg-[#a90b00f6]'><MdError  className=' text-xl mr-2'/>{errorMessage}</p>}

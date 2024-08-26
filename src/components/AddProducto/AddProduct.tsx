@@ -12,8 +12,8 @@ type Form = {
 
 const AddProduct = () => {
 
-    const { handleSubmit, register, formState: { errors } } = useForm<Form>()
-
+    const { handleSubmit, register, formState: { errors }, reset } = useForm<Form>()
+    const token = localStorage.getItem('token')
     const [successMessage, setSuccessMessage] = useState<string | null>(null)
     const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
@@ -29,14 +29,18 @@ const AddProduct = () => {
             formData.append('imagen', data.imagen[0])
 
             const result = await clientAxios.post('/api/producto', formData, 
-                { headers: { 'Content-Type': 'multipart/form-data' } }
-            )
+                { headers: 
+                    { 'Content-Type': 'multipart/form-data',
+                    'auth': `${token}`
+                    },
+                })
 
             setSuccessMessage(result.data.message)
             setLoading(false)
             setTimeout(() => {
                 setSuccessMessage(null)
-            }, 1000)
+                reset()
+            }, 2000)
         
         } catch (error) {
             console.log(error)

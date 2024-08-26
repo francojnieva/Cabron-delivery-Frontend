@@ -23,6 +23,10 @@ const AllProducts = () => {
         fetchData()
     },[])
 
+    const handleProductDelete = (id: string) => {
+        setProducts(products.filter(product => product._id !== id))
+    }
+
 
     return (
         <section className=" py-6 flex items-center justify-around flex-wrap gap-2 md:justify-start lg:gap-5">
@@ -37,6 +41,7 @@ const AllProducts = () => {
                             description={product.description}
                             price={product.price}
                             discount={product.discount}
+                            onDelete={handleProductDelete}
                         />
                     )
                 })}

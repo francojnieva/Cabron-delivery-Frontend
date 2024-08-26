@@ -50,7 +50,11 @@ const AllUsers = () => {
     const handleDeleteUser = async (userId: string) => {
         try {
             setLoadingDelete(userId)
-            await clientAxios.delete(`/api/usuario?id=${userId}`)
+            await clientAxios.delete(`/api/usuario?id=${userId}`, {
+                headers: {
+                    'auth': `${token}`
+                }
+            })
             setUsers((prevUsers) => prevUsers.filter((user) => user._id !== userId))
         } catch (error) {
             console.log(error)

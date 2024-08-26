@@ -36,7 +36,6 @@ const MenuMobile = () => {
                         </>
                         :
                         <>
-                            <Link to={'/notificaciones'}><IoIosNotifications className="hover:text-[#fff]" /></Link>
                             <Link to={'/ofertas'}><RiDiscountPercentFill className="hover:text-[#fff]" /></Link>
                             <Link to={'/perfil'}><HiUser className="hover:text-[#fff]" /></Link>
                             <Link to={'/panel'}><TiHome className="hover:text-[#fff]" /></Link>

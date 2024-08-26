@@ -1,13 +1,14 @@
 import { TiHome } from "react-icons/ti";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import { HiUser } from "react-icons/hi";
-import { IoIosNotifications } from "react-icons/io";
+import { RiShoppingBag4Fill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from '../../assets/banner-delivery.png'
 import { jwtDecode } from "jwt-decode";
 import { FaUsers } from "react-icons/fa6";
 import { BiSolidFoodMenu } from "react-icons/bi";
 import { HiViewGridAdd } from "react-icons/hi";
+import ImgDelivery from "../../assets/banner-women.png";
 
 const Sidebard = () => {
 
@@ -26,9 +27,9 @@ const Sidebard = () => {
     
     return (
         <section className="hidden h-screen bg-[#FFF] lg:block fixed top-0 w-48 py-3">
-            <nav className="text-[#A098AE] h-full">
-                <img className=" mx-auto w-16" src={Logo} alt="Logo Cabrón" title="Cabrón Delivery" />
-                <ul className='space-y-6 pt-7'>
+            <nav className="text-[#A098AE] h-full flex flex-col justify-between">
+                <img className=" mx-auto w-24" src={Logo} alt="Logo Cabrón" title="Cabrón Delivery" />
+                <ul className='space-y-6'>
                     {
                         rol === 'admin'
                             ?
@@ -60,13 +61,12 @@ const Sidebard = () => {
                                     <HiUser />
                                     <p className=' text-sm font-medium'>Perfil</p>
                                 </Link>
-                                <Link to={'/notificaciones'} className=' flex items-center text-xl space-x-3 mx-2  py-4 px-7 rounded-lg hover:bg-[#F8B602] hover:text-[#FFF] transition-all'>
-                                    <IoIosNotifications />
-                                    <p className=' text-sm font-medium'>Notificaciones</p>
-                                </Link>
                             </>
                     }
                 </ul>
+                <div className="bg-[#F8B602] h-32 mx-2 rounded-lg p-5 relative">
+                    <img src={ImgDelivery} className="absolute bottom-0 right-7" alt="Delivery paquete" />
+                </div>
             </nav>
         </section>
     )

@@ -13,7 +13,7 @@ const PageTitle = ({ title }: Props) => {
 
     return (
         <section className="flex items-center justify-between">
-            <h1 className=" text-2xl font-medium">{title}</h1>
+            <h1 className=" text-3xl font-medium">{title}</h1>
             <Link to={'/carrito'}>
             <div className=" relative text-[#F8B602]">
                 <p className=" absolute -top-4 left-5 font-medium">{quantityInCart}</p>

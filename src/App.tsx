@@ -3,7 +3,6 @@ import Dashboard from "./pages/Dashboard/Dashboard"
 import Discount from "./pages/Discount/Discount"
 import Login from "./pages/Login/Login"
 import NotFound from "./pages/NotFound/NotFound"
-import Notifications from "./pages/Notifications/Notifications"
 import Profile from "./pages/Profile/Profile"
 import SignUp from "./pages/SignUp/SignUp"
 import { BrowserRouter,Route, Routes } from "react-router-dom"
@@ -15,6 +14,7 @@ import Admin from "./pages/Admin/Admin"
 import AllUsers from "./components/AllUsers/AllUsers"
 import AllProducts from "./components/AllProducts/AllProducts"
 import AddProduct from "./components/AddProducto/AddProduct"
+import Welcome from "./components/Welcome/Welcome"
 
 function App() {
 
@@ -22,11 +22,11 @@ function App() {
 		<CartContextProvider>
 			<BrowserRouter>
 					<Routes>
-						<Route path="/" element={<SignUp />}></Route>
+						<Route path="/" element={<Welcome />}></Route>
+						<Route path="/registro" element={<SignUp />}></Route>
 						<Route path="/iniciar-sesión" element={<Login />}></Route>
 
 						<Route path="/panel" element={<ProtectedRoute><Board><Dashboard /></Board></ProtectedRoute>} />
-						<Route path="/notificaciones" element={<ProtectedRoute><Board><Notifications /></Board></ProtectedRoute>} />
 						<Route path="/carrito" element={<ProtectedRoute><Board><Cart /></Board></ProtectedRoute>} />
 						<Route path="/ofertas" element={<ProtectedRoute><Board><Discount /></Board></ProtectedRoute>} />
 						<Route path="/perfil" element={<ProtectedRoute><Board><Profile /></Board></ProtectedRoute>} />
