@@ -82,7 +82,7 @@ export const CartContextProvider = ({ children } : Props) => {
             emptyCart
         }}>
             {children}
-        </CartContext.Provider>
+        </CartContext.Provider> 
     )
 }
 

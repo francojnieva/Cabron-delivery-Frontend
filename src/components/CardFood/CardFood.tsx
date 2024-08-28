@@ -3,8 +3,9 @@ import { CartContext } from "../../context/CartContext";
 import { jwtDecode } from "jwt-decode";
 import { BiSolidTrashAlt } from "react-icons/bi";
 import { clientAxios } from "../../utils/axios";
-import { FaCheckCircle } from "react-icons/fa";
+import { FaCheckCircle, FaEdit } from "react-icons/fa";
 import { AiFillCloseCircle } from "react-icons/ai";
+import ModalEditUser from "../ModalEdit/ModalEdit";
 
 type Card = {
     name: string,
@@ -14,9 +15,10 @@ type Card = {
     discount: number,
     idProduct: string,
     onDelete: (id: string) => void
+    onUpdate: () => void
 }
 
-const CardFood = ({ image, name, description, price, discount, idProduct, onDelete }: Card) => {
+const CardFood = ({ image, name, description, price, discount, idProduct, onDelete, onUpdate }: Card) => {
     const token = localStorage.getItem('token')
     const { rol } = jwtDecode(token)
     const [successMessage, setSuccessMessage] = useState<boolean>(false)
@@ -66,6 +68,7 @@ const CardFood = ({ image, name, description, price, discount, idProduct, onDele
         }
     }
 
+
     return (
         <div className="relative card w-44 bg-[#fff] shadow-xl xl:w-48">
             <figure><img className="w-full h-40 object-cover" src={image} alt={name} /></figure>
@@ -73,10 +76,24 @@ const CardFood = ({ image, name, description, price, discount, idProduct, onDele
                 loadingDelete ? (
                     <p className="loading loading-spinner loading-xs lg:loading-sm absolute top-2 right-3 text-red-500"></p>
                 ) : (
-                    <BiSolidTrashAlt
-                        onClick={() => handleDeleteProduct(idProduct)}
-                        className="absolute top-2 right-3 text-red-500 text-lg"
-                    />
+                    <>
+                        <BiSolidTrashAlt
+                            onClick={() => handleDeleteProduct(idProduct)}
+                            className="absolute top-2 right-3 text-red-500 text-lg"
+                        />
+                        <FaEdit
+                            onClick={() => {
+                                const modal = document.getElementById(`edit-${idProduct}`) as HTMLDialogElement | null
+                                modal?.showModal()
+                            }}
+                            className="absolute bottom-4 right-3 text-blue-500 text-lg cursor-pointer"
+                        />
+                        <ModalEditUser 
+                            rol={rol}
+                            idProduct={idProduct}
+                            onUpdate={onUpdate}
+                        />
+                    </>
                 )
             )}
             <div className="card-body p-3">
@@ -95,7 +112,7 @@ const CardFood = ({ image, name, description, price, discount, idProduct, onDele
                         </div>
                     </div>
                     {successMessage &&
-                        <div className="absolute inset-0 flex justify-center bg-[#ffffff6b] items-center text-4xl">
+                        <div className="absolute inset-0 flex justify-center transition-all bg-[#ffffff6b] items-center text-4xl">
                             <FaCheckCircle className="  text-green-500" />
                         </div>}
                     {errorMessage &&

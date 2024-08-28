@@ -7,9 +7,12 @@ import { MdError } from "react-icons/md";
 import { clientAxios } from '../../utils/axios';
 
 export type Form = {
-    username?: string
+    name?: string
     email: string
     password: string
+    description?: string
+    price?: number
+    discount?: number
 }
 
 const SignUp = () => {

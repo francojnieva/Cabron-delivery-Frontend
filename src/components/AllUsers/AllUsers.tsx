@@ -32,7 +32,7 @@ const AllUsers = () => {
 
     const fetchData = async () => {
         try {
-            const { data } = await clientAxios.get('/api/usuarios',
+            const { data } = await clientAxios.get<User[]>('/api/usuarios',
                 {
                     headers: {
                         "auth": `${token}`

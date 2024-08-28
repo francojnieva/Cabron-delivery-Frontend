@@ -50,7 +50,7 @@ const Payment = () => {
             setLoading(false)
             setTimeout(() => {
                 setSuccessMessage(null)
-            }, 2000)
+            }, 3500)
             reset()
             emptyCart()
         } catch (error) {

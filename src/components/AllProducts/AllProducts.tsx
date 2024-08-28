@@ -10,7 +10,7 @@ const AllProducts = () => {
 
     const fetchData = async () => {
         try {
-            const { data } = await clientAxios.get(`/api/productos`)
+            const { data } = await clientAxios.get<Product[]>(`/api/productos`)
             setProducts(data)
             setLoading(false)
         } catch (error) {
@@ -27,7 +27,8 @@ const AllProducts = () => {
         setProducts(products.filter(product => product._id !== id))
     }
 
-
+    const handleUpdate = () => fetchData()
+   
     return (
         <section className=" py-6 flex items-center justify-around flex-wrap gap-2 md:justify-start lg:gap-5">
                 { loading &&  <p className="loading  mx-auto loading-spinner loading-md"></p> }
@@ -42,6 +43,7 @@ const AllProducts = () => {
                             price={product.price}
                             discount={product.discount}
                             onDelete={handleProductDelete}
+                            onUpdate={handleUpdate}
                         />
                     )
                 })}

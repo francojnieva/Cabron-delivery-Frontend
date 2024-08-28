@@ -28,7 +28,7 @@ const Sidebard = () => {
     return (
         <section className="hidden h-screen bg-[#FFF] lg:block fixed top-0 w-48 py-3">
             <nav className="text-[#A098AE] h-full flex flex-col justify-between">
-                <img className=" mx-auto w-24" src={Logo} alt="Logo Cabrón" title="Cabrón Delivery" />
+                <Link to={'/panel'}><img className=" mx-auto w-24" src={Logo} alt="Logo Cabrón" title="Cabrón Delivery" /></Link>
                 <ul className='space-y-6'>
                     {
                         rol === 'admin'
@@ -64,7 +64,8 @@ const Sidebard = () => {
                             </>
                     }
                 </ul>
-                <div className="bg-[#F8B602] h-32 mx-2 rounded-lg p-5 relative">
+                <div className="bg-[#F8B602] h-52 mx-2 rounded-lg p-5 relative">
+                    <p className="text-[#FFF] font-bold text-base">¡Pide hoy y vive una experiencia única!</p>
                     <img src={ImgDelivery} className="absolute bottom-0 right-7" alt="Delivery paquete" />
                 </div>
             </nav>

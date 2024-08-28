@@ -1,8 +1,6 @@
 import { TiHome } from "react-icons/ti";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import { HiUser, HiViewGridAdd } from "react-icons/hi";
-import { IoIosNotifications } from "react-icons/io";
-import { IoSettingsSharp } from "react-icons/io5";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUsers } from "react-icons/fa6";
 import { BiSolidFoodMenu } from "react-icons/bi";
