@@ -3,8 +3,11 @@ import PageTitle from "../../components/PageTitle/PageTitle";
 import { PiBankFill } from "react-icons/pi";
 import { useForm } from "react-hook-form";
 import { jwtDecode } from "jwt-decode";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { clientAxios } from "../../utils/axios";
+import { changeTitleBrowser } from "../../utils/changeTitleBrowser";
+import { toast } from "sonner";
+import Toast from "../../components/Toaster/Toaster";
 import { CartContext } from "../../context/CartContext";
 
 type Form = {
@@ -27,8 +30,6 @@ const Payment = () => {
     const { cartProducts, totalToPay, emptyCart } = useContext(CartContext)
 
     const {handleSubmit, register, formState: { errors }, reset} = useForm<Form>()
-    const [successMessage, setSuccessMessage] = useState<string | null>(null)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
     const [loading, setLoading] = useState<boolean>(false)
 
     const onSubmit = async (data : Form) => {
@@ -46,25 +47,24 @@ const Payment = () => {
             const response = await clientAxios.post<Form>('/api/pago', formData, 
                 { headers: { 'Content-Type': 'multipart/form-data' } }
             )
-            setSuccessMessage(response.data.message)
+            toast.success(response.data.message)
             setLoading(false)
-            setTimeout(() => {
-                setSuccessMessage(null)
-            }, 3500)
             reset()
             emptyCart()
         } catch (error) {
             console.log(error)
-            if (error.response) setErrorMessage('Error al enviar los datos')
+            if (error.response) toast.error('Hubo un error. Por favor intenta más tarde')
             setLoading(false)
-            setTimeout(() => {
-                setErrorMessage(null)
-            }, 2500)
         }
     }
 
+    useEffect(() => {
+        changeTitleBrowser('Pagos')
+    }, [])
+
     return (
         <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">
+            <Toast />
             <PageTitle 
                 title='Pagos'
             />
@@ -113,8 +113,6 @@ const Payment = () => {
                             />
                             <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.address && errors.address.message}</span>
                         </div>
-                        {successMessage && <p className='py-2 px-4 flex text-sm items-center text-center rounded-md text-[#fff] bg-[#00a933f6]'>{successMessage}</p>}
-                        {errorMessage && <p className='py-2 px-4 flex text-sm items-center text-center rounded-md text-[#fff] bg-[#a90600f6]'>{errorMessage}</p>}
                         <div>
                             <button type="submit" className="py-2 px-4 rounded-md bg-[#F8B602] text-[#fff] cursor-pointer">{loading ? <span className="loading loading-spinner loading-sm"></span> : 'Enviar'}</button>
                         </div>

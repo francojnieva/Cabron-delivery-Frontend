@@ -5,7 +5,8 @@ import { jwtDecode } from "jwt-decode"
 import { UserData } from "../pages/Profile/Profile"
 import { Product } from "../pages/Cart/Cart"
 
-export const CartContext = createContext()
+
+export const CartContext = createContext({})
 
 type PropAddProduct = {
     idProduct: string   
@@ -85,4 +86,3 @@ export const CartContextProvider = ({ children } : Props) => {
         </CartContext.Provider> 
     )
 }
-

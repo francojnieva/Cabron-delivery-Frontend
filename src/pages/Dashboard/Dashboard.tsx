@@ -1,8 +1,14 @@
 import PageTitle from "../../components/PageTitle/PageTitle";
 import AllProducts from "../../components/AllProducts/AllProducts";
 import Banner from "../../assets/entrega.png";
+import { changeTitleBrowser } from "../../utils/changeTitleBrowser";
+import { useEffect } from "react";
 
 const Dashboard = () => {
+
+    useEffect(() => {
+        changeTitleBrowser('Panel')
+    }, [])
     
     return (
         <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">

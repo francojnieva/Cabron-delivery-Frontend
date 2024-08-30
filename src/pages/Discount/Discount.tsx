@@ -3,6 +3,7 @@ import CardFood from "../../components/CardFood/CardFood"
 import PageTitle from "../../components/PageTitle/PageTitle"
 import { Product } from "../Cart/Cart"
 import { clientAxios } from "../../utils/axios"
+import { changeTitleBrowser } from "../../utils/changeTitleBrowser"
 
 const Discount = () => {
 
@@ -23,6 +24,7 @@ const Discount = () => {
             }
         }
         fetchData()
+        changeTitleBrowser('Descuentos')
     },[])
 
     return ( 

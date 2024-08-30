@@ -1,7 +1,14 @@
 import { Link } from 'react-router-dom'
 import Error404 from '../../assets/error404.png'
+import { useEffect } from 'react'
+import { changeTitleBrowser } from '../../utils/changeTitleBrowser'
 
 const NotFound = () => {
+
+	useEffect(() => {
+        changeTitleBrowser('Página no encontrada')
+    }, [])
+
 	return (
 		<section className='h-screen space-y-6 flex flex-col items-center justify-center'>
 			<img src={Error404} alt="Página no encontrada" />

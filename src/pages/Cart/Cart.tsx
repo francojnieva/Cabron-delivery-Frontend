@@ -1,7 +1,8 @@
 import { useContext, useEffect, useState } from "react"
 import { BiSolidTrashAlt } from "react-icons/bi"
-import { CartContext } from "../../context/CartContext"
 import { Link } from "react-router-dom"
+import { changeTitleBrowser } from "../../utils/changeTitleBrowser"
+import { CartContext } from "../../context/CartContext"
 
 export type Product = {
     _id: string;
@@ -30,6 +31,7 @@ const Cart = () => {
 
     useEffect(() => {
         if (cartProducts.length >= 0) setLoading(false)
+        changeTitleBrowser('Carrito de compras')
     }, [])
 
     return (

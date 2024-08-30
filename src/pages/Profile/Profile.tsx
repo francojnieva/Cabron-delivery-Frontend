@@ -1,9 +1,10 @@
 import ModalLogout from "../../components/ModalLogout/ModalLogout";
 import PageTitle from "../../components/PageTitle/PageTitle";
-import ModalEditUser from "../../components/ModalEdit/ModalEdit";
 import { useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { clientAxios } from "../../utils/axios";
+import { changeTitleBrowser } from "../../utils/changeTitleBrowser";
+import ModalEditUser from "../../components/ModalEditUser/ModalEditUser";
 
 export type UserData = {
     name: string;
@@ -17,12 +18,10 @@ export type UserData = {
 const Profile = () => {
     const token : string | null = localStorage.getItem('token')
     let userId: string | undefined
-    let rolUser: string | undefined
 
     if (token) {
-        const { id, rol } = jwtDecode<UserData>(token)
+        const { id } = jwtDecode<UserData>(token)
         userId = id
-        rolUser= rol
     }
 
     const [user, setUser] = useState<UserData | null>(null)
@@ -42,6 +41,7 @@ const Profile = () => {
 
     useEffect(() => {
         getUser()
+        changeTitleBrowser('Mi Perfil')
     }, [])
     
     return (
@@ -58,9 +58,7 @@ const Profile = () => {
                         <p>Email: {user?.email}</p>
                     </div>
                 </article>
-                <ModalEditUser
-                    rol={rolUser as string} 
-                />
+                <ModalEditUser />
             </section>
         </section>
     )

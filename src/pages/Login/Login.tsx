@@ -2,12 +2,15 @@ import { Link, useNavigate } from 'react-router-dom'
 import Banner from '../../assets/banner-delivery.png'
 import { useForm } from 'react-hook-form'
 import axios, { AxiosError } from 'axios'
-import { useContext, useState } from 'react'
-import { MdError } from 'react-icons/md'
+import { useContext, useEffect, useState } from 'react'
 import { Form } from '../SignUp/SignUp'
 import { clientAxios } from '../../utils/axios'
-import { CartContext } from '../../context/CartContext'
 import { jwtDecode } from 'jwt-decode'
+import { changeTitleBrowser } from '../../utils/changeTitleBrowser'
+import { toast } from 'sonner'
+import Toast from '../../components/Toaster/Toaster'
+import { CartContext } from '../../context/CartContext'
+
 
 const Login = () => {
     const { setToken } = useContext(CartContext)
@@ -16,20 +19,18 @@ const Login = () => {
     const navigate = useNavigate()
 
     const [loading, setLoading] = useState<boolean>(false)
-    const [successmessage, setSuccessMessage] = useState<string | null>(null)
-    const [errorMessage, setErrorMessage] = useState<string | null>(null)
-
+    
     const onSubmit = async (data: Form) => {
         try {
             setLoading(true)
             const response = await clientAxios.post(`/api/iniciar-sesion`, data)
             if (response.status === 200) {
                 localStorage.setItem('token', response.data.token)
-                setSuccessMessage(response.data.message)
                 setToken(response.data.token)
+                toast.success(response.data.message)
                 setTimeout(() => {
                     const token = localStorage.getItem('token')
-                    const {rol} = jwtDecode(token)
+                    const { rol } = jwtDecode(token)
                     if (rol === 'admin') {
                         navigate('/admin-usuarios')
                         
@@ -43,17 +44,20 @@ const Login = () => {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError<any>
                 if (axiosError.response?.data?.message) {
-                    setErrorMessage(axiosError?.response?.data.message)
+                    toast.error(axiosError?.response?.data.message)
                 }
             }
            setLoading(false)
-           setTimeout(() => {
-                setErrorMessage(null)
-            }, 2000)
         }
     }
 
+    useEffect(() => {
+        changeTitleBrowser('Iniciar sesión')
+    }, [])
+    
     return (
+        <>
+        <Toast />
         <section className='p-6 relative min-h-screen flex flex-col items-center justify-center text-[#2e2d30] bg-[#fff] space-y-12 md:w-[85%] md:mx-auto lg:space-y-5'>
             <img className='w-48' src={Banner} alt="Banner" />
             <form className=' space-y-5 md:w-[60%] lg:w-[50%] ' onSubmit={handleSubmit(onSubmit)}>
@@ -74,7 +78,7 @@ const Login = () => {
                                 message: 'Correo electrónico inválido',
                             },
                         })}
-                    />
+                        />
                     <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.email && errors.email.message}</span>
                     <input
                         className="grow py-3 pr-3 bg-transparent border border-t-transparent border-x-transparent border-b-[#bdbdbd] text-sm w-full outline-none font-medium placeholder:text-[#636262]"
@@ -93,11 +97,10 @@ const Login = () => {
                 <div>
                     <Link to='/registro' className=" text-sm link text-blue-600">Registrarme</Link>
                 </div>
-                {successmessage && <p className='py-2 px-4 flex text-sm items-center text-center rounded-md text-[#fff] bg-[#00a933f6]'>{successmessage}</p>}
-                {errorMessage && <p className='py-2 px-4 flex text-sm items-center text-center rounded-md text-[#fff] bg-[#a90b00f6]'><MdError  className=' text-xl mr-2'/>{errorMessage}</p>}
                 <button className=' w-full py-2 px-4 shadow-md rounded-md font-medium text-[#fff] bg-[#FFBC0D]' type="submit">{loading ? <span className="loading loading-spinner loading-md"></span> : 'Iniciar sesión'}</button>
             </form>
         </section>
+        </>
     )
 }
 

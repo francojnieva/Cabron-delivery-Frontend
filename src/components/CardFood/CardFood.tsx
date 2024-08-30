@@ -1,11 +1,12 @@
 import { useContext, useState } from "react";
-import { CartContext } from "../../context/CartContext";
 import { jwtDecode } from "jwt-decode";
 import { BiSolidTrashAlt } from "react-icons/bi";
 import { clientAxios } from "../../utils/axios";
-import { FaCheckCircle, FaEdit } from "react-icons/fa";
-import { AiFillCloseCircle } from "react-icons/ai";
-import ModalEditUser from "../ModalEdit/ModalEdit";
+import ModalEdit from "../ModalEditProduct/ModalEditProduct";
+import Toast from "../Toaster/Toaster";
+import { toast } from "sonner";
+import { FaEdit } from "react-icons/fa";
+import { CartContext } from "../../context/CartContext";
 
 type Card = {
     name: string,
@@ -21,8 +22,6 @@ type Card = {
 const CardFood = ({ image, name, description, price, discount, idProduct, onDelete, onUpdate }: Card) => {
     const token = localStorage.getItem('token')
     const { rol } = jwtDecode(token)
-    const [successMessage, setSuccessMessage] = useState<boolean>(false)
-    const [errorMessage, setErrorMessage] = useState<boolean>(false)
     const [loading, setLoading] = useState<boolean>(false)
     const [loadingDelete, setLoadingDelete] = useState<boolean>(false)
     const [counter, setCounter] = useState<number>(1)
@@ -39,17 +38,11 @@ const CardFood = ({ image, name, description, price, discount, idProduct, onDele
                 counter
             })
             setLoading(false)
-            setSuccessMessage(true)
-            setTimeout(() => {
-                setSuccessMessage(false)
-            }, 2000)
+            toast.success('Producto agregado al carrito')
         } catch (error) {
             console.log(error)
             setLoading(false)
-            setErrorMessage(true)
-            setTimeout(() => {
-                setErrorMessage(false)
-            }, 2000)
+            toast.error('Error al agregar al carrito')
         }
     }
 
@@ -68,9 +61,9 @@ const CardFood = ({ image, name, description, price, discount, idProduct, onDele
         }
     }
 
-
     return (
         <div className="relative card w-44 bg-[#fff] shadow-xl xl:w-48">
+            <Toast />
             <figure><img className="w-full h-40 object-cover" src={image} alt={name} /></figure>
             {rol === 'admin' && (
                 loadingDelete ? (
@@ -88,7 +81,7 @@ const CardFood = ({ image, name, description, price, discount, idProduct, onDele
                             }}
                             className="absolute bottom-4 right-3 text-blue-500 text-lg cursor-pointer"
                         />
-                        <ModalEditUser 
+                        <ModalEdit 
                             rol={rol}
                             idProduct={idProduct}
                             onUpdate={onUpdate}
@@ -111,14 +104,6 @@ const CardFood = ({ image, name, description, price, discount, idProduct, onDele
                             </div>
                         </div>
                     </div>
-                    {successMessage &&
-                        <div className="absolute inset-0 flex justify-center transition-all bg-[#ffffff6b] items-center text-4xl">
-                            <FaCheckCircle className="  text-green-500" />
-                        </div>}
-                    {errorMessage &&
-                        <div className="absolute inset-0 flex justify-center bg-[#ffffff6b] items-center text-4xl">
-                            <AiFillCloseCircle className=" text-red-500" />
-                        </div>}
                     <div className="w-full mt-3" hidden={rol === 'admin'}>
                         <button onClick={handleCart} className="p-2 rounded-lg bg-[#F8B602] text-xs font-medium text-[#fff] w-full lg:text-sm">{loading ? <p className="loading loading-spinner loading-xs lg:loading-sm"></p> : 'Agregar al carrito'}</button>
                     </div>

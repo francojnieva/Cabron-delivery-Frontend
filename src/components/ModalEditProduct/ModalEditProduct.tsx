@@ -11,7 +11,7 @@ type PropModal = {
     onUpdate?: () => void
 }
 
-const ModalEdit = ({ rol, idProduct, onUpdate } : PropModal) => {
+const ModalEditProduct = ({ rol, idProduct, onUpdate } : PropModal) => {
     const token: string | null = localStorage.getItem('token')
     let userId: string | undefined
 
@@ -31,20 +31,6 @@ const ModalEdit = ({ rol, idProduct, onUpdate } : PropModal) => {
     }
 
     const onSubmit = async (data: Form) => {
-        if (rol === 'usuario') {
-            try {
-                const id = userId
-                setLoading(true)
-                await clientAxios.put(`/api/editar-usuario?id=${id}`, data, {
-                    headers: { auth: token }
-                })
-                setLoading(false)
-            } catch (error) {
-                console.log(error)
-                setLoading(false)
-            }
-        }
-
         if (rol === 'admin') {
             try {
                 setLoading(true)
@@ -81,40 +67,7 @@ const ModalEdit = ({ rol, idProduct, onUpdate } : PropModal) => {
                             })}
                         />
                         <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.name && errors.name.message}</span>
-                        {rol === 'usuario' &&
-                            <>
                         <input
-                            className="w-full p-1 bg-transparent outline-none"
-                            type="email"
-                            id="email"
-                            placeholder="Email"
-                            autoComplete="off"
-                            {...register('email', {
-                                required: 'Este campo es obligatorio',
-                                pattern: {
-                                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i,
-                                    message: 'Correo electrónico inválido',
-                                },
-                            })}
-                        />
-                        <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.email && errors.email.message}</span>
-                        <input
-                            className="w-full p-1 bg-transparent outline-none"
-                            type="password"
-                            placeholder='Contraseña'
-                            autoComplete='off'
-                            id="password"
-                            {...register('password', {
-                                required: 'Este campo es obligatorio',
-                                minLength: { value: 8, message: 'La contraseña debe tener entre 8 y 30 caracteres' },
-                                maxLength: { value: 30, message: 'La contraseñano debe superar los 30 caracteres' },
-                            })}
-                        />
-                        <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.password && errors.password.message}</span>
-                        </>}
-                        {rol === 'admin' && 
-                        <>
-                            <input
                             className="w-full p-1 bg-transparent outline-none "
                             type="text"
                             id="description"
@@ -138,14 +91,13 @@ const ModalEdit = ({ rol, idProduct, onUpdate } : PropModal) => {
                             })}
                         />
                         <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.price && errors.price.message}</span>
-                            <input
-                                className="w-full p-1 bg-transparent outline-none "
-                                type="number"
-                                id="discount"
-                                placeholder="Descuento"
-                                autoComplete="off"
-                            />
-                        </>}
+                        <input
+                            className="w-full p-1 bg-transparent outline-none "
+                            type="number"
+                            id="discount"
+                            placeholder="Descuento"
+                            autoComplete="off"
+                        />
                         <div className=" flex items-center justify-end text-xs space-x-7">
                             <button type="submit" className="p-2 w-20 rounded-md bg-[#f80202e8]">
                                 {loading ? <p className="loading  mx-auto loading-spinner loading-xs"></p> : 'Confirmar'}
@@ -161,4 +113,4 @@ const ModalEdit = ({ rol, idProduct, onUpdate } : PropModal) => {
     )
 }
 
-export default ModalEdit
+export default ModalEditProduct

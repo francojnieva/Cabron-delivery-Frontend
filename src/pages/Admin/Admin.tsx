@@ -1,5 +1,6 @@
-import { ReactNode } from "react"
+import { ReactNode, useEffect } from "react"
 import ModalLogout from "../../components/ModalLogout/ModalLogout"
+import { changeTitleBrowser } from "../../utils/changeTitleBrowser"
 
 type Prop = {
 	children: ReactNode
@@ -7,6 +8,10 @@ type Prop = {
 }
 
 const Admin = ({children, title} : Prop) => {
+
+	useEffect(() => {
+        changeTitleBrowser('Administración')
+    }, [])
 
 	return (
 		<section className=" px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">

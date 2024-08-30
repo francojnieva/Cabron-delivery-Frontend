@@ -7,7 +7,6 @@ import Profile from "./pages/Profile/Profile"
 import SignUp from "./pages/SignUp/SignUp"
 import { BrowserRouter,Route, Routes } from "react-router-dom"
 import Cart from "./pages/Cart/Cart"
-import { CartContextProvider } from "./context/CartContext"
 import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute "
 import Payment from "./pages/Payment/Payment"
 import Admin from "./pages/Admin/Admin"
@@ -15,6 +14,7 @@ import AllUsers from "./components/AllUsers/AllUsers"
 import AllProducts from "./components/AllProducts/AllProducts"
 import AddProduct from "./components/AddProducto/AddProduct"
 import Welcome from "./components/Welcome/Welcome"
+import { CartContextProvider } from "./context/CartContext"
 
 function App() {
 

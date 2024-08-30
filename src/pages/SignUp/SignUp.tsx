@@ -2,12 +2,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import Banner from '../../assets/banner-delivery.png'
 import { useForm } from 'react-hook-form';
 import axios, { AxiosError } from 'axios';
-import { useState } from 'react';
-import { MdError } from "react-icons/md";
+import { useEffect, useState } from 'react';
 import { clientAxios } from '../../utils/axios';
+import { changeTitleBrowser } from '../../utils/changeTitleBrowser';
+import { toast } from 'sonner'
+import Toast from '../../components/Toaster/Toaster'
 
 export type Form = {
     name?: string
+    username?: string
     email: string
     password: string
     description?: string
@@ -22,15 +25,13 @@ const SignUp = () => {
     const navigate = useNavigate()
 
     const [loading, setLoading] = useState(false)
-    const [successmessage, setSuccessMessage] = useState(null)
-    const [errorMessage, setErrorMessage] = useState(null)
 
     const onSubmit = async (data: Form) => {
         try {
             setLoading(true)
             const response = await clientAxios.post(`/api/registro`, data)
             if (response.status === 201) {
-                setSuccessMessage(response.data.message)
+                toast.success(response.data.message)
                 setTimeout(() => {
                     navigate('/iniciar-sesión')
                 }, 2000)
@@ -40,14 +41,20 @@ const SignUp = () => {
             if (axios.isAxiosError(error)) {
                 const axiosError = error as AxiosError<any>
                 if (axiosError.response?.data?.message) {
-                    setErrorMessage(axiosError?.response?.data.message)
+                    toast.error(axiosError?.response?.data.message)
                 }
             }
             setLoading(false)
         }
     }
 
+    useEffect(() => {
+        changeTitleBrowser('Crear cuenta')
+    }, [])
+
     return (
+        <>
+         <Toast />
         <section className='p-6 relative min-h-screen flex flex-col items-center justify-center text-[#2e2d30] bg-[#fff] space-y-12 md:w-[85%] md:mx-auto lg:space-y-5'>
             <img className='w-48' src={Banner} alt="Banner" />
             <form className=' space-y-5 md:w-[60%] lg:w-[50%] ' onSubmit={handleSubmit(onSubmit)}>
@@ -65,7 +72,7 @@ const SignUp = () => {
                             minLength: { value: 3, message: 'El nombre debe tener entre 3 y 25 caracteres' },
                             maxLength: { value: 25, message: 'El nombre no debe superar los 25 caracteres' },
                         })}
-                    />
+                        />
                     <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.username && errors.username.message}</span>
                     <input
                         className="grow py-3 pr-3 bg-transparent border border-t-transparent border-x-transparent border-b-[#bdbdbd] text-sm w-full outline-none font-medium placeholder:text-[#636262]"
@@ -80,7 +87,7 @@ const SignUp = () => {
                                 message: 'Correo electrónico inválido',
                             },
                         })}
-                    />
+                        />
                     <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.email && errors.email.message }</span>
                     <input
                         className="grow py-3 pr-3 bg-transparent border border-t-transparent border-x-transparent border-b-[#bdbdbd] text-sm w-full outline-none font-medium placeholder:text-[#636262]"
@@ -93,18 +100,16 @@ const SignUp = () => {
                             minLength: { value: 8, message: 'La contraseña debe tener entre 8 y 30 caracteres' },
                             maxLength: { value: 30, message: 'La contraseñano debe superar los 30 caracteres' },
                         })}
-                    />
+                        />
                     <span className='text-xs text-red-600 pb-3 xl:text-sm'>{errors.password && errors.password.message}</span>
                 </div>
                 <div>
                     <Link to='/iniciar-sesión' className=" text-sm link text-blue-600">Iniciar sesión</Link>
                 </div>
-                {successmessage && <p className='py-2 px-4 flex text-sm items-center text-center rounded-md text-[#fff] bg-[#00a933f6]'>{successmessage}</p>}
-                {errorMessage && <p className='py-2 px-4 flex text-sm items-center text-center rounded-md text-[#fff] bg-[#a90b00f6]'><MdError  className=' text-xl mr-2'/>{errorMessage}</p>}
                 <button className=' w-full py-2 px-4 shadow-md rounded-md font-medium text-[#fff] bg-[#FFBC0D]' type="submit">{loading ? <span className="loading loading-spinner loading-md"></span> : 'Registrar'}</button>
             </form>
         </section>
-
+        </>
     )
 }
 
