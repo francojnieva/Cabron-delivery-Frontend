@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { clientAxios } from '../../utils/axios'
+import axios from 'axios'
 
 type Form = {
     name: string,
@@ -45,7 +46,11 @@ const AddProduct = () => {
         } catch (error) {
             console.log(error)
             setLoading(false)
-            if (error.response) setErrorMessage('Error al agregar el producto')
+            if (axios.isAxiosError(error)) {
+                if (error.response) {
+                   return setErrorMessage('Error al agregar el producto')
+                }
+            }
             setTimeout(() => {
                 setErrorMessage(null)
             }, 2500)

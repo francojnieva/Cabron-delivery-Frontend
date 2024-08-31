@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import Toast from "../../components/Toaster/Toaster";
 import { CartContext } from "../../context/CartContext";
 import ButtonMethodPay from "../../components/ButtonMethodPay/ButtonMethodPay";
+import axios from "axios";
 
 type Form = {
     address: string
@@ -43,7 +44,7 @@ const Payment = () => {
             formData.append('username', username)
             formData.append('id', id)
             formData.append('email', email)
-            formData.append('totalToPay', totalToPay)
+            formData.append('totalToPay', totalToPay.toString())
             formData.append('order', JSON.stringify(cartProducts))
 
             const response = await clientAxios.post<Form>('/api/pago', formData, 
@@ -55,8 +56,12 @@ const Payment = () => {
             emptyCart()
         } catch (error) {
             console.log(error)
-            if (error.response) toast.error('Hubo un error. Por favor intenta más tarde')
-            setLoading(false)
+            if (axios.isAxiosError(error)) {
+                if (error.response) {
+                    toast.error('Hubo un error. Por favor intenta más tarde')
+                    setLoading(false)
+                }
+            }
         }
     }
 

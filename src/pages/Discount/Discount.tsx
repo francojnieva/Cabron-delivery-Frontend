@@ -45,6 +45,8 @@ const Discount = () => {
                                 description={product.description}
                                 price={product.price}
                                 discount={product.discount}
+                                onDelete={() => product._id}
+                                onUpdate={ () =>  {}}
                             />
                         )
                     })

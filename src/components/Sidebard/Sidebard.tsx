@@ -1,7 +1,6 @@
 import { TiHome } from "react-icons/ti";
 import { RiDiscountPercentFill } from "react-icons/ri";
 import { HiUser } from "react-icons/hi";
-import { RiShoppingBag4Fill } from "react-icons/ri";
 import { Link, useNavigate } from "react-router-dom";
 import Logo from '../../assets/banner-delivery.png'
 import { jwtDecode } from "jwt-decode";
@@ -9,6 +8,7 @@ import { FaUsers } from "react-icons/fa6";
 import { BiSolidFoodMenu } from "react-icons/bi";
 import { HiViewGridAdd } from "react-icons/hi";
 import ImgDelivery from "../../assets/banner-women.png";
+import { TokenPayload } from "../CardFood/CardFood";
 
 const Sidebard = () => {
 
@@ -17,7 +17,7 @@ const Sidebard = () => {
     const navigate = useNavigate()
     if (token) {
         try {
-            const decoded = jwtDecode(token)
+            const decoded = jwtDecode<TokenPayload>(token)
             rol = decoded.rol
         } catch (error) {
             console.error("Token no válido:", error)

@@ -5,8 +5,25 @@ import { jwtDecode } from "jwt-decode"
 import { UserData } from "../pages/Profile/Profile"
 import { Product } from "../pages/Cart/Cart"
 
+type CartContextType = {
+    cartProducts: Product[]
+    quantityInCart: number
+    totalToPay: number
+    addProduct: (props: PropAddProduct) => Promise<void>
+    deleteProduct: (id: string) => Promise<void>
+    setToken: React.Dispatch<React.SetStateAction<string | null>>
+    emptyCart: () => void
+}
 
-export const CartContext = createContext({})
+export const CartContext = createContext<CartContextType>({
+    cartProducts: [],
+    quantityInCart: 0,
+    totalToPay: 0,
+    addProduct: async () => {},
+    deleteProduct: async () => {},
+    setToken: () => {},
+    emptyCart: () => {}
+})
 
 type PropAddProduct = {
     idProduct: string   
