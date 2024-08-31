@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Board from "./layout/Board/Board"
+import Dashboard from "./pages/Dashboard/Dashboard"
+import Discount from "./pages/Discount/Discount"
+import Login from "./pages/Login/Login"
+import NotFound from "./pages/NotFound/NotFound"
+import Profile from "./pages/Profile/Profile"
+import SignUp from "./pages/SignUp/SignUp"
+import { BrowserRouter,Route, Routes } from "react-router-dom"
+import Cart from "./pages/Cart/Cart"
+import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute "
+import Payment from "./pages/Payment/Payment"
+import Admin from "./pages/Admin/Admin"
+import AllUsers from "./components/AllUsers/AllUsers"
+import AllProducts from "./components/AllProducts/AllProducts"
+import AddProduct from "./components/AddProducto/AddProduct"
+import Welcome from "./components/Welcome/Welcome"
+import { CartContextProvider } from "./context/CartContext"
 
 function App() {
-  const [count, setCount] = useState(0)
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+	return (
+		<CartContextProvider>
+			<BrowserRouter>
+					<Routes>
+						<Route path="/" element={<Welcome />}></Route>
+						<Route path="/registro" element={<SignUp />}></Route>
+						<Route path="/iniciar-sesión" element={<Login />}></Route>
+
+						<Route path="/panel" element={<ProtectedRoute><Board><Dashboard /></Board></ProtectedRoute>} />
+						<Route path="/carrito" element={<ProtectedRoute><Board><Cart /></Board></ProtectedRoute>} />
+						<Route path="/ofertas" element={<ProtectedRoute><Board><Discount /></Board></ProtectedRoute>} />
+						<Route path="/perfil" element={<ProtectedRoute><Board><Profile /></Board></ProtectedRoute>} />
+						<Route path="/pagar" element={<ProtectedRoute><Board><Payment /></Board></ProtectedRoute>} />
+						{/* Admin */}
+						<Route path="/admin-usuarios" element={<ProtectedRoute requiredRole="admin"><Board><Admin title='Usuarios'><AllUsers /></Admin></Board></ProtectedRoute>} />
+						<Route path="/admin-productos" element={<ProtectedRoute requiredRole="admin"><Board><Admin title='Productos'><AllProducts /></Admin></Board></ProtectedRoute>} />
+						<Route path="/admin-agregar-productos" element={<ProtectedRoute requiredRole="admin"><Board><Admin title='Agregar producto'><AddProduct /></Admin></Board></ProtectedRoute>} />
+						{/*  */}
+						<Route path="*" element={<NotFound />} />
+					</Routes>
+			</BrowserRouter>
+		</CartContextProvider>
+		
+	)
 }
 
 export default App
