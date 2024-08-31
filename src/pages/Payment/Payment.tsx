@@ -1,4 +1,4 @@
-import { IoIosCheckmarkCircle } from "react-icons/io";
+import { SiMercadopago } from "react-icons/si";
 import PageTitle from "../../components/PageTitle/PageTitle";
 import { PiBankFill } from "react-icons/pi";
 import { useForm } from "react-hook-form";
@@ -9,6 +9,7 @@ import { changeTitleBrowser } from "../../utils/changeTitleBrowser";
 import { toast } from "sonner";
 import Toast from "../../components/Toaster/Toaster";
 import { CartContext } from "../../context/CartContext";
+import ButtonMethodPay from "../../components/ButtonMethodPay/ButtonMethodPay";
 
 type Form = {
     address: string
@@ -31,6 +32,7 @@ const Payment = () => {
 
     const {handleSubmit, register, formState: { errors }, reset} = useForm<Form>()
     const [loading, setLoading] = useState<boolean>(false)
+    const [paymentMethod, setPaymentMethod] = useState<string | null>(null)
 
     const onSubmit = async (data : Form) => {
         try {
@@ -62,6 +64,8 @@ const Payment = () => {
         changeTitleBrowser('Pagos')
     }, [])
 
+    const handleMethodPay = (id: string) => setPaymentMethod(id)
+       
     return (
         <section className="px-6 pt-4 pb-20 min-h-screen bg-[#F5F5F5] w-full lg:pl-56">
             <Toast />
@@ -70,21 +74,37 @@ const Payment = () => {
             />
             <section className="pt-3">
                 <div className="py-2 space-y-3">
-                    <h3 className=" font-medium">Métodos de pago</h3>
-                    <button className="relative border p-3 rounded-lg">
-                        <IoIosCheckmarkCircle className="absolute top-1 text-xl right-1 text-[#53e62e]" />
-                        <PiBankFill className=" text-3xl mx-auto"/>
-                        <small>Transferencia</small>
-                    </button>
-                    <div className="space-y-2">
-                        <p className=" font-medium">Datos de la cuenta:</p>
-                        <div className=" font-normal space-y-3">
-                            <p>CBU: xxxxxxxx</p>
-                            <p>Alias: xxxxxxx</p>
-                            <p>Titular de la cuenta: xxxxx</p>
-                            <p>Banco: xxxxxx</p>
-                        </div>
+                    <h3 className=" font-medium">Seleccione un método de pago</h3>
+                    <div className=" flex items-center space-x-3">
+                        <ButtonMethodPay 
+                            name='Transferencia'
+                            icon={PiBankFill}
+                            onClick={() => handleMethodPay('transf')}
+                        />
+                        <ButtonMethodPay 
+                            name='Mercado pago'
+                            icon={SiMercadopago}
+                            onClick={() => handleMethodPay('mercadopago')}
+                        />
                     </div>
+                    {
+                        paymentMethod === 'transf' && 
+                        <div className="space-y-2">
+                            <p className=" font-medium">Datos de la cuenta:</p>
+                            <div className=" font-normal space-y-3">
+                                <p>CBU: xxxxxxxx</p>
+                                <p>Alias: xxxxxxx</p>
+                                <p>Titular de la cuenta: xxxxx</p>
+                                <p>Banco: xxxxxx</p>
+                            </div>
+                        </div>
+                    }
+                    {
+                        paymentMethod === 'mercadopago' && 
+                        <div className="space-y-2">
+                            <p className=" font-medium text-xs text-white bg-[#00B5FF] p-3 rounded-md text-center">Estamos trabajando en esta funcionalidad</p>
+                        </div>
+                    }
                     <form className="space-y-3" onSubmit={handleSubmit(onSubmit)}>
                         <div className=" flex flex-col space-y-3">
                             <label className=" font-medium">Subir comprobante:</label>
