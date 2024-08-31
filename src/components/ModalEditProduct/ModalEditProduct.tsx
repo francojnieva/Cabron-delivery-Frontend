@@ -8,7 +8,7 @@ import { useState } from 'react'
 type PropModal = {
     rol: string,
     idProduct?: string
-    onUpdate?: () => void
+    onUpdate: () => void
 }
 
 const ModalEditProduct = ({ rol, idProduct, onUpdate } : PropModal) => {

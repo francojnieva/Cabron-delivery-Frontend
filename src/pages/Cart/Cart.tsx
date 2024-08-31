@@ -47,7 +47,9 @@ const Cart = () => {
             {
                 loading 
                 ? 
-                <p className="loading loading-spinner mx-auto loading-xs lg:loading-sm"></p> 
+                <>
+                    <p className="loading loading-spinner mx-auto loading-xs lg:loading-sm"></p> 
+                </>
                 :
                 <>
                 {cartProducts && cartProducts.map(({ _id, name, image, quantity, price } : Product) => (

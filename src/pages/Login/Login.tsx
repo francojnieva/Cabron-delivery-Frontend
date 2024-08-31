@@ -10,6 +10,7 @@ import { changeTitleBrowser } from '../../utils/changeTitleBrowser'
 import { toast } from 'sonner'
 import Toast from '../../components/Toaster/Toaster'
 import { CartContext } from '../../context/CartContext'
+import { TokenPayload } from '../../components/CardFood/CardFood'
 
 
 const Login = () => {
@@ -29,8 +30,8 @@ const Login = () => {
                 setToken(response.data.token)
                 toast.success(response.data.message)
                 setTimeout(() => {
-                    const token = localStorage.getItem('token')
-                    const { rol } = jwtDecode(token)
+                    const token = localStorage.getItem('token') || ''
+                    const { rol } = jwtDecode<TokenPayload>(token)
                     if (rol === 'admin') {
                         navigate('/admin-usuarios')
                         

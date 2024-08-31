@@ -19,9 +19,13 @@ type Card = {
     onUpdate: () => void
 }
 
+export type TokenPayload = {
+    rol: string
+}
+
 const CardFood = ({ image, name, description, price, discount, idProduct, onDelete, onUpdate }: Card) => {
-    const token = localStorage.getItem('token')
-    const { rol } = jwtDecode(token)
+    const token = localStorage.getItem('token') || ''
+    const { rol } = jwtDecode<TokenPayload>(token)
     const [loading, setLoading] = useState<boolean>(false)
     const [loadingDelete, setLoadingDelete] = useState<boolean>(false)
     const [counter, setCounter] = useState<number>(1)
