@@ -20,7 +20,6 @@ const Admin = ({children, title} : Prop) => {
 				<ModalLogout />
 			</div>
 			{children}
-
 		</section>
 	)
 }

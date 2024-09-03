@@ -16,20 +16,13 @@ export type UserData = {
 }
 
 const Profile = () => {
-    const token : string | null = localStorage.getItem('token')
-    let userId: string | undefined
-
-    if (token) {
-        const { id } = jwtDecode<UserData>(token)
-        userId = id
-    }
-
+    const token = localStorage.getItem('token') || ''
+    const { id } = jwtDecode<UserData>(token)
     const [user, setUser] = useState<UserData | null>(null)
 
     const getUser = async () => {
         if (token) {
             try {
-                const id = userId
                 const { data } = await clientAxios.get<UserData>(`/api/usuario?id=${id}`, {
                 headers: { auth: token }})
                 setUser(data)
@@ -58,7 +51,9 @@ const Profile = () => {
                         <p>Email: {user?.email}</p>
                     </div>
                 </article>
-                <ModalEditUser />
+                <ModalEditUser 
+                    updateUser={getUser}
+                />
             </section>
         </section>
     )

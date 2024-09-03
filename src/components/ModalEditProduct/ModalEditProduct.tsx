@@ -1,7 +1,5 @@
 import { useForm } from 'react-hook-form'
 import { Form } from '../../pages/SignUp/SignUp'
-import { jwtDecode } from 'jwt-decode'
-import { UserData } from '../../pages/Profile/Profile'
 import { clientAxios } from '../../utils/axios'
 import { useState } from 'react'
 
@@ -12,17 +10,10 @@ type PropModal = {
 }
 
 const ModalEditProduct = ({ rol, idProduct, onUpdate } : PropModal) => {
-    const token: string | null = localStorage.getItem('token')
-    let userId: string | undefined
-
-    if (token) {
-        const { id } = jwtDecode<UserData>(token)
-        userId = id
-    }
+    const token: string | null = localStorage.getItem('token') || ''
 
     const [loading, setLoading] = useState<boolean>(false)
     const { handleSubmit, register, formState: { errors }, reset } = useForm<Form>()
-
 
     const closeModal = () => {
         const modal = document.getElementById(`edit-${idProduct}`) as HTMLDialogElement
