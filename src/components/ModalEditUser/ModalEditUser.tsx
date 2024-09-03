@@ -4,16 +4,16 @@ import { jwtDecode } from 'jwt-decode'
 import { UserData } from '../../pages/Profile/Profile'
 import { clientAxios } from '../../utils/axios'
 import { useState } from 'react'
+import Toast from '../Toaster/Toaster'
+import { toast } from 'sonner'
 
-const ModalEditUser = () => {
-    const token : string | null = localStorage.getItem('token')
-    let userId: string | undefined
+type User = {
+    updateUser: () => void
+}
 
-    if (token) {
-        const { id } = jwtDecode<UserData>(token)
-        userId = id
-    }
-
+const ModalEditUser = ({ updateUser } :User) => {
+    const token = localStorage.getItem('token') || ''
+    const { id } = jwtDecode<UserData>(token)
     const [loading, setLoading] = useState<boolean>(false)
     const { handleSubmit, register, formState: { errors }, reset } = useForm<Form>()
 
@@ -30,23 +30,27 @@ const ModalEditUser = () => {
 
     const onSubmit = async (data : Form) => {
         try {
-            const id = userId
             setLoading(true)
             await clientAxios.put(`/api/editar-usuario?id=${id}`, data, {
                 headers: {
                     'auth': `${token}`
                 }
             })
+            toast.success('Perfil editado')
             setLoading(false)
             closeModal()
+            updateUser()
         } catch (error) {
             console.log(error)
             setLoading(false)
+            closeModal()
+            toast.error('Hubo un problema. Por favor, intenta más tarde')
         }
     }
     
     return (
         <>
+        <Toast />
         <button className="rounded-md p-1 text-white bg-[#3d3d3d] md:w-28" onClick={showModal}>
             <p>Editar perfil</p>
         </button>
@@ -56,7 +60,7 @@ const ModalEditUser = () => {
                         <input 
                             className="w-full p-1 bg-transparent outline-none " 
                             type="text" 
-                            id="name"
+                            id="username"
                             placeholder="Nombre"
                             autoComplete="off"
                             {...register('username', {
